@@ -66,13 +66,6 @@ export const CreatePost = async (
       }
     }
   } catch (error) {
-    if (error.isJoi === true) {
-      return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
-      );
-    }
     next(error);
   }
 };
@@ -103,13 +96,6 @@ export const getAllPost = async (
       );
     }
   } catch (error) {
-    if (error.isJoi === true) {
-      return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
-      );
-    }
     next(error);
   }
 };
@@ -152,13 +138,6 @@ export const getPost = async (
       }
     }
   } catch (error) {
-    if (error.isJoi === true) {
-      return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
-      );
-    }
     next(error);
   }
 };
@@ -199,13 +178,6 @@ export const detelePost = async (
       }
     }
   } catch (error) {
-    if (error.isJoi === true) {
-      return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
-      );
-    }
     next(error);
   }
 };
@@ -256,13 +228,6 @@ export const updatePost = async (
       }
     }
   } catch (error) {
-    if (error.isJoi === true) {
-      return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
-      );
-    }
     next(error);
   }
 };

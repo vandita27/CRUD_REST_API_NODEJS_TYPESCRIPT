@@ -17,8 +17,8 @@ app.use(bodyParser.json());
 // app.use(morgan("dev"));
 app.use(morgan<Request, Response>("dev"));
 
-const dbConnectionString: string = process.env.DB_CONNECION ?? "";
-const server_port = process.env.SERVER_PORT ?? "";
+const dbConnectionString: string = "mongodb+srv://ecreatorstech:Amazon1992@ecreatorstech.i6guqlq.mongodb.net/?retryWrites=true&w=majority";
+const server_port = process.env.SERVER_PORT ?? "3000";
 
 connectorDb(dbConnectionString);
 

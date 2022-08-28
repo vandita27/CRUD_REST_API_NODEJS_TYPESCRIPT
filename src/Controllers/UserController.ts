@@ -34,6 +34,22 @@ const processUpdateUser = async (
     console.log(error);
   }
 };
+
+const processDeleteUser = async (
+  userId: String,
+  userModelValidation: Iuser
+) => {
+  try {
+    const deleteUser = await User.deleteOne(
+      {
+        _id: userId,
+      }
+    );
+    return deleteUser;
+  } catch (error) {
+    console.log(error);
+  }
+};
 /**
  * add new user
  * @param userModelValidation
@@ -46,7 +62,7 @@ const addUser = async (userModelValidation: Iuser) => {
       surname: userModelValidation.surname,
     });
     const savedUser = await user.save();
-
+    //console.log(savedUser);
     return savedUser;
   } catch (error) {
     throw new createError.BadRequest("Bad request.");
@@ -99,13 +115,6 @@ export const createUser = async (
       }
     }
   } catch (error) {
-    if (error.isJoi === true) {
-      return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
-      );
-    }
     next(error);
   }
 };
@@ -159,13 +168,6 @@ export const updateUser = async (
       }
     }
   } catch (error) {
-    if (error.isJoi === true) {
-      return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
-      );
-    }
     next(error);
   }
 };
@@ -199,13 +201,54 @@ export const getUser = async (
       }
     }
   } catch (error) {
-    if (error.isJoi === true) {
+    next(error);
+  }
+};
+
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userModelValidation: Iuser = await UserValidation.validateAsync(
+      req.body
+    );
+
+    if (!userModelValidation) {
       return next(
-        res.status(400).json({
-          message: "Invalid details provided.",
-        })
+        new createError.BadRequest(
+          "Operation failed, invalid details provided."
+        )
       );
+    } else {
+      const isUsernameValid = await User.findOne({
+        username: userModelValidation.username,
+      });
+      if (!isUsernameValid) {
+        res.status(404).json({
+          message: `Username ${userModelValidation.username} not valid`,
+        });
+      } else {
+        const deleteUser = await processDeleteUser(
+          isUsernameValid._id,
+          userModelValidation
+        );
+        if (deleteUser) {
+          res.status(201).json({
+            deleteUser,
+          });
+        } else {
+          return next(
+            res.status(400).json({
+              message: "Invalid details provided.",
+            })
+          );
+        }
+      }
     }
+  } catch (error) {
     next(error);
   }
 };
