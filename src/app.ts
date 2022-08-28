@@ -7,6 +7,7 @@ import connectorDb from "./Helper/Dbconnector";
 import * as dotenv from "dotenv";
 import PostRoute from "./Routes/PostRoute";
 import UserRoute from "./Routes/UserRoute";
+import VinniRoute from "./Routes/vinni";
 import morgan from "morgan";
 
 dotenv.config();
@@ -26,6 +27,8 @@ connectorDb(dbConnectionString);
 app.use("/user", UserRoute);
 //post route
 app.use("/post", PostRoute);
+
+app.use("/vinni",VinniRoute);
 
 //404 response
 app.use((error: any, res: Response, next: NextFunction) => {

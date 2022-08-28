@@ -35,6 +35,7 @@ var Dbconnector_1 = __importDefault(require("./Helper/Dbconnector"));
 var dotenv = __importStar(require("dotenv"));
 var PostRoute_1 = __importDefault(require("./Routes/PostRoute"));
 var UserRoute_1 = __importDefault(require("./Routes/UserRoute"));
+var vinni_1 = __importDefault(require("./Routes/vinni"));
 var morgan_1 = __importDefault(require("morgan"));
 dotenv.config();
 app.use((0, helmet_1.default)());
@@ -49,6 +50,7 @@ var server_port = (_a = process.env.SERVER_PORT) !== null && _a !== void 0 ? _a 
 app.use("/user", UserRoute_1.default);
 //post route
 app.use("/post", PostRoute_1.default);
+app.use("/vinni", vinni_1.default);
 //404 response
 app.use(function (error, res, next) {
     try {
